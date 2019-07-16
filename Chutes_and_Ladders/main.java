@@ -3,25 +3,26 @@ public class main {
     private static int numOfPlayers;
     private static ArrayList<Person> players;
     public static void main(String[] args) {
-        StartGame();
+        startGame();
 
     }
-    public static void StartGame() {
-        Intro();
-        SetupGame();
-        // PlayGame();
+    public static void startGame() {
+        intro();
+        setupGame();
+        newLine();
+        // test();
+        playGame();
         // End();
     }
-    public static void Intro() {
+    public static void intro() {
         System.out.println("Welcome to Chutes and Ladders! ");
         newLine();
     }
-    public static void SetupGame() {
+    public static void setupGame() {
         System.out.println("Please enter how many players you want. (minimum number is 2, max is 6)");
         setupGameHelper();
         newLine();
         setupPlayers();
-
     }
     public static void newLine() {
         System.out.println();
@@ -41,6 +42,40 @@ public class main {
         }
     }
     public static  void setupPlayersHelper(int i) {
-        System.out.println("Please enter player " + (i+1) + "'s name:   ");
+        System.out.print("Please enter player " + (i+1) + "'s name:    ");
+        Scanner strScan = new Scanner(System.in);
+        String name = strScan.next();
+        Person temp = new Person(name);
+        players.add(temp);
     }
+    public static void playGame() {
+        int maxPosition = 0;
+        int currentPlayer = 0;
+        while (maxPosition < 100) {
+            for (int i = 0; i < numOfPlayers; i++) {
+                int roll = diceRoll();
+                Person temp = players.get(i);
+                int position = temp.getPosition() + roll;
+                temp.setPosition(position);
+                if (maxPosition < position)
+                    maxPosition = position;
+                // positionCheck();
+                // System.out.println(maxPosition + "    " + temp.getName());
+            }
+        }
+    }
+    public static int diceRoll() {
+        int roll = (int)(6.0 * Math.random()) + 1;
+        System.out.println(roll);
+        return roll;
+        // return (int)(5.0 * Math.random()) + 1;
+    }
+
+    // public static void test() {
+    //     newLine();
+    //     newLine();
+    //     for (int i = 0; i < players.size(); i++) {
+    //         System.out.println(players.get(i).getName());
+    //     }
+    // }
 }
