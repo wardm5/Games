@@ -12,9 +12,6 @@ public class main {
                 various other tweeks if needed.
          */
 
-
-
-
         intro();    // intro to game, will only show up once even if the player wants to play again.
         startGame();
     }
