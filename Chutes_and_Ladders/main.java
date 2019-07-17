@@ -5,6 +5,16 @@ public class main {
     private static int[] board;
     private static ArrayList<Person> players;
     public static void main(String[] args) {
+        /*  things to do:
+                Get Quiz questions and answers from API: https://opentdb.com/api_config.php
+                incorprate this in to the game, if player, then they need to answer the question for ladders (use slide) and slides (avoid slide)
+                ensure that users have to roll dice (press enter on their turn)
+                various other tweeks if needed.
+         */
+
+
+
+
         intro();    // intro to game, will only show up once even if the player wants to play again.
         startGame();
     }
