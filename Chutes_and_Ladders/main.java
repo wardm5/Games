@@ -16,16 +16,16 @@ public class main {
     public static void intro() {
         newLine();
         newLine();
-        System.out.println(   "**************************************************************************************************************\n"
-                            + "*                                                                                                            *\n"
-                            + "*                                   Welcome to Chutes and Ladders!                                           *\n"
-                            + "*                                                                                                            *\n"
-                            + "*  Shoots and Ladders, otherwise known as Snakes and Ladders, is a game of chance for which you roll a dice  *\n"
-                            + "*  and move accross a board of 100 spaces. If you land on a 'ladder', you advance up the board. If you hit a *\n"
-                            + "*  slide on the other hand, you go backwards. The first person to get to 100 wins. Good luck!                *\n"
-                            + "*                                                                                                            *\n"
-                            + "**************************************************************************************************************"
-                            );
+        System.out.println("***************************************************************************************************************\n"
+                         + "*                                                                                                             *\n"
+                         + "*                                   Welcome to Chutes and Ladders!                                            *\n"
+                         + "*                                                                                                             *\n"
+                         + "*  Shoots and Ladders, otherwise known as Snakes and Ladders, is a game of chance for which you roll a dice   *\n"
+                         + "*  and move accross a board of 100 spaces. If you land on a 'ladder', you advance up the board. If you hit a  *\n"
+                         + "*  slide on the other hand, you go backwards. The first person to get to 100 wins. Good luck!                 *\n"
+                         + "*                                                                                                             *\n"
+                         + "***************************************************************************************************************"
+                        );
         newLine();
     }
     public static void setupGame() {
