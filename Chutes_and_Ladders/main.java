@@ -5,7 +5,7 @@ public class main {
     private static int[] board;
     private static ArrayList<Person> players;
     public static void main(String[] args) {
-        intro();
+        intro();    // intro to game, will only show up once even if the player wants to play again.
         startGame();
     }
     public static void startGame() {
@@ -14,7 +14,18 @@ public class main {
         end(winner);
     }
     public static void intro() {
-        System.out.println("Welcome to Chutes and Ladders! ");
+        newLine();
+        newLine();
+        System.out.println(   "**************************************************************************************************************\n"
+                            + "*                                                                                                            *\n"
+                            + "*                                   Welcome to Chutes and Ladders!                                           *\n"
+                            + "*                                                                                                            *\n" 
+                            + "*  Shoots and Ladders, otherwise known as Snakes and Ladders, is a game of chance for which you roll a dice  *\n"
+                            + "*  and move accross a board of 100 spaces. If you land on a 'ladder', you advance up the board. If you hit a *\n"
+                            + "*  slide on the other hand, you go backwards. The first person to get to 100 wins. Good luck!                *\n"
+                            + "*                                                                                                            *\n"
+                            + "**************************************************************************************************************"
+                            );
         newLine();
     }
     public static void setupGame() {
@@ -124,5 +135,4 @@ public class main {
             return;
         }
     }
-
 }
