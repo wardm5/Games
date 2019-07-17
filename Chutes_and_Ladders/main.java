@@ -1,17 +1,17 @@
 import java.util.*;
+import java.io.File;
 public class main {
     private static int numOfPlayers;
+    private static int[] board;
     private static ArrayList<Person> players;
     public static void main(String[] args) {
         startGame();
-
     }
     public static void startGame() {
         intro();
         setupGame();
-        newLine();
-        // test();
         playGame();
+        // test();
         // End();
     }
     public static void intro() {
@@ -21,6 +21,7 @@ public class main {
     public static void setupGame() {
         System.out.println("Please enter how many players you want. (minimum number is 2, max is 6)");
         setupGameHelper();
+        setupBoard();
         newLine();
         setupPlayers();
     }
@@ -34,6 +35,28 @@ public class main {
             System.out.print("Please re-enter the number of players:    ");
             numOfPlayers = scan.nextInt();
         }
+    }
+    public static void setupBoard() {
+        board = new int[101];
+        try {
+            // URL url = getClass().getResource("chutes_ladders.txt");
+            // File file = new File(url.getPath());
+            File file = new File("chutes_ladders.txt");
+            // File file = new File(".//Games//Chutes_and_Ladders//chutes_ladders.txt");
+            Scanner fileScan = new Scanner(file);
+            while(fileScan.hasNextLine()) {
+                int index = fileScan.nextInt();
+                int position = fileScan.nextInt();
+                System.out.println(index + "     " + position);
+                board[index] = position;
+                if (!fileScan.hasNextInt())
+                    break;
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+
     }
     public static void setupPlayers() {
         players = new ArrayList<>();
@@ -50,7 +73,6 @@ public class main {
     }
     public static void playGame() {
         int maxPosition = 0;
-        int currentPlayer = 0;
         while (maxPosition < 100) {
             for (int i = 0; i < numOfPlayers; i++) {
                 int roll = diceRoll();
@@ -65,17 +87,14 @@ public class main {
         }
     }
     public static int diceRoll() {
-        int roll = (int)(6.0 * Math.random()) + 1;
-        System.out.println(roll);
-        return roll;
-        // return (int)(5.0 * Math.random()) + 1;
+        return (int)(6.0 * Math.random()) + 1;
     }
 
     // public static void test() {
     //     newLine();
     //     newLine();
-    //     for (int i = 0; i < players.size(); i++) {
-    //         System.out.println(players.get(i).getName());
+    //     for (int i = 0; i < board.length; i++) {
+    //         System.out.println(board[i]);
     //     }
     // }
 }
