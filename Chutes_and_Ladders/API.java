@@ -2,9 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.*;
-// import com.google.gson.Gson;
 
 public class API {
     private String url;
@@ -27,12 +25,6 @@ public class API {
     public int getCode() {
         return this.response;
     }
-
-    // String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=b351e40979955f1a541e74a6c4da057a";  // url for api
-    // HttpURLConnection con = sendGet(url);       // sets up Http connection to website
-    // String json = getWebsiteString(con);        // get website string (api json)
-    // int response = getResponseCode(con);        // gets the response of the website
-
     public void disconnect() {
         con.disconnect();                           // disconnects from website
     }

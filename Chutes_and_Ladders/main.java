@@ -16,8 +16,6 @@ public class main {
         // startGame();
         API quiz = new API();
         System.out.println(quiz.getResponse());
-
-
     }
     public static void startGame() {
         setupGame();
