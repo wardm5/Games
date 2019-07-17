@@ -19,7 +19,7 @@ public class main {
         System.out.println(   "**************************************************************************************************************\n"
                             + "*                                                                                                            *\n"
                             + "*                                   Welcome to Chutes and Ladders!                                           *\n"
-                            + "*                                                                                                            *\n" 
+                            + "*                                                                                                            *\n"
                             + "*  Shoots and Ladders, otherwise known as Snakes and Ladders, is a game of chance for which you roll a dice  *\n"
                             + "*  and move accross a board of 100 spaces. If you land on a 'ladder', you advance up the board. If you hit a *\n"
                             + "*  slide on the other hand, you go backwards. The first person to get to 100 wins. Good luck!                *\n"
@@ -69,6 +69,16 @@ public class main {
             Scanner strScan = new Scanner(System.in);
             String name = strScan.next();
             Person temp = new Person(name);
+            System.out.println("Do you want this player to be a computer? Enter 'yes' or 'no'.");
+            Scanner scan = new Scanner(System.in);
+            String response = scan.next();
+            while (!response.toLowerCase().equals("yes") && !response.toLowerCase().equals("no")) {
+                System.out.println("Please enter a valid response of either 'yes' or 'no'.");
+                response = scan.next();
+            }
+            if (response.toLowerCase().equals("yes")) {
+                temp.setComputer(true);
+            }
             players.add(temp);
         }
     }
@@ -118,7 +128,8 @@ public class main {
         return newPosition;
     }
     public static void end(int i) {
-        System.out.println("Congratulations " + players.get(i).getName() + ", you reached 100 and won the game!");
+        System.out.println("Winner winner, lasagna dinner!!\n"
+                         + "Congratulations " + players.get(i).getName() + ", you reached 100 and won the game!");
         newLine();
         System.out.println("Do you want to play again? Enter 'yes' or 'no'.");
         Scanner scan = new Scanner(System.in);
@@ -126,7 +137,6 @@ public class main {
         while (!response.toLowerCase().equals("yes") && !response.toLowerCase().equals("no")) {
             System.out.println("Please enter a valid response of either 'yes' or 'no'.");
             response = scan.next();
-            System.out.println(response.toLowerCase().equals("yes"));
         }
         if (response.toLowerCase().equals("yes")) {
             startGame();

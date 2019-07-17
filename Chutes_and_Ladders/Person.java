@@ -24,4 +24,10 @@ public class Person {
     public void setPosition(int position) {
         this.position = position;
     }
+    public void setComputer(boolean val) {
+        computer = val;
+    }
+    public boolean isComputer() {
+        return computer;
+    }
 }
