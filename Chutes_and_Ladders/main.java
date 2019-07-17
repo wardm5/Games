@@ -11,7 +11,6 @@ public class main {
         intro();
         setupGame();
         playGame();
-        // test();
         // End();
     }
     public static void intro() {
@@ -47,7 +46,6 @@ public class main {
             while(fileScan.hasNextLine()) {
                 int index = fileScan.nextInt();
                 int position = fileScan.nextInt();
-                System.out.println(index + "     " + position);
                 board[index] = position;
                 if (!fileScan.hasNextInt())
                     break;
@@ -55,8 +53,6 @@ public class main {
         } catch (Exception e){
             System.out.println(e);
         }
-
-
     }
     public static void setupPlayers() {
         players = new ArrayList<>();
@@ -71,30 +67,43 @@ public class main {
         Person temp = new Person(name);
         players.add(temp);
     }
-    public static void playGame() {
+    public static int playGame() {
         int maxPosition = 0;
         while (maxPosition < 100) {
             for (int i = 0; i < numOfPlayers; i++) {
-                int roll = diceRoll();
                 Person temp = players.get(i);
+                String name = temp.getName();
+                int roll = diceRoll(name);
                 int position = temp.getPosition() + roll;
+                position = checkPosition(position, name) + position;
                 temp.setPosition(position);
                 if (maxPosition < position)
                     maxPosition = position;
-                // positionCheck();
-                // System.out.println(maxPosition + "    " + temp.getName());
+                else if (position == 100)
+                    return i;  // return winner index
             }
         }
+        return -1; // error code
     }
-    public static int diceRoll() {
-        return (int)(6.0 * Math.random()) + 1;
+    public static int diceRoll(String name) {
+        int roll = (int)(6.0 * Math.random()) + 1;
+        System.out.println(name + " rolled a " + roll + "!");
+        return roll;
     }
-
-    // public static void test() {
-    //     newLine();
-    //     newLine();
-    //     for (int i = 0; i < board.length; i++) {
-    //         System.out.println(board[i]);
-    //     }
-    // }
+    public static int checkPosition(int position, String name) {
+        if (board[position] > 0) {
+            System.out.println("Lucky you " + name + ", you landed on a slide, you will advance " + board[position] + " spaces!");
+            System.out.println("Your new position is:    " + (board[position] + position));
+        } else if (board[position] < 0) {
+            System.out.println("Oh nooo " + name + "! You landed on a slide, you go backwards " + (-board[position]) + " spaces!");
+            System.out.println("Your new position is:    " + (board[position] + position));
+        } else {
+            System.out.println(name + ", you did not land on a shoot or ladder this turn...");
+            System.out.println("Your new position is:    " + (board[position] + position));
+        }
+        newLine();
+        if (position + board[position] > 100)
+            return position;
+        return board[position];
+    }
 }
