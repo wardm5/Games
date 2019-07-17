@@ -6,16 +6,26 @@ import java.net.URLEncoder;
 import java.util.*;
 // import com.google.gson.Gson;
 
-public class quizAPI {
+public class API {
     private String url;
     private HttpURLConnection con;
     private String json;
     private int response;
-    public quizAPI() {
-        this.url = "https://opentdb.com/api.php?amount=" + 10;   // url for api
-        this.con = sendGet(url);                                 // sets up Http connection to website
-        this.json = getWebsiteString(con);                       // get website string (api json)
-        this.response = getResponseCode(con);        // gets the response of the website
+    public API() {
+        try {
+            this.url = "https://opentdb.com/api.php?amount=" + 10;   // url for api
+            this.con = sendGet(url);                                 // sets up Http connection to website
+            this.json = getWebsiteString(con);                       // get website string (api json)
+            this.response = getResponseCode(con);        // gets the response of the website
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public String getResponse() {
+        return this.json;
+    }
+    public int getCode() {
+        return this.response;
     }
 
     // String url = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=b351e40979955f1a541e74a6c4da057a";  // url for api
@@ -53,5 +63,4 @@ public class quizAPI {
         int code = con.getResponseCode(); // returns response code
         return code;
     }
-
 }

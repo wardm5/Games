@@ -12,8 +12,12 @@ public class main {
                 various other tweeks if needed.
          */
 
-        intro();    // intro to game, will only show up once even if the player wants to play again.
-        startGame();
+        // intro();    // intro to game, will only show up once even if the player wants to play again.
+        // startGame();
+        API quiz = new API();
+        System.out.println(quiz.getResponse());
+
+
     }
     public static void startGame() {
         setupGame();
