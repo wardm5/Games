@@ -167,7 +167,7 @@ public class main {
             startGame();
         } else {
             System.out.println("Goodbye! Hope you had fun! ");
-            quiz.disconnect();   // disconnect from website when done with the game.
+            // quiz.disconnect();   // disconnect from website when done with the game.
             return;
         }
     }
