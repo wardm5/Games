@@ -4,6 +4,8 @@ public class main {
     private static int numOfPlayers;
     private static int[] board;
     private static ArrayList<Person> players;
+    private static API quiz;
+    private static int turn;
     public static void main(String[] args) {
         /*  things to do:
                 Get Quiz questions and answers from API: https://opentdb.com/api_config.php
@@ -12,10 +14,11 @@ public class main {
                 various other tweeks if needed.
          */
 
-        // intro();    // intro to game, will only show up once even if the player wants to play again.
-        // startGame();
-        API quiz = new API();
-        System.out.println(quiz.getResponse());
+        intro();    // intro to game, will only show up once even if the player wants to play again.
+        startGame();
+        // quiz = new API();
+        // System.out.println(quiz.getResponse());
+
     }
     public static void startGame() {
         setupGame();
@@ -31,7 +34,7 @@ public class main {
                          + "*                                                                                                             *\n"
                          + "*  Shoots and Ladders, otherwise known as Snakes and Ladders, is a game of chance for which you roll a dice   *\n"
                          + "*  and move accross a board of 100 spaces. If you land on a 'ladder', you advance up the board. If you hit a  *\n"
-                         + "*  slide on the other hand, you go backwards. The first person to get to 100 wins. Good luck!                 *\n"
+                         + "*  'slide' on the other hand, you go backwards. The first person to get to 100 wins. Good luck!               *\n"
                          + "*                                                                                                             *\n"
                          + "***************************************************************************************************************"
                         );
@@ -97,6 +100,9 @@ public class main {
             for (int i = 0; i < numOfPlayers; i++) {
                 Person temp = players.get(i);
                 String name = temp.getName();
+                boolean comp = temp.isComputer();
+                if (!comp)
+                    notifyPlayer(name);
                 int roll = diceRoll(name);
                 int position = temp.getPosition();
                 position = checkPosition(position, roll, name);
@@ -108,6 +114,11 @@ public class main {
             }
         }
         return -1; // error code
+    }
+    public static void notifyPlayer(String name) {
+        System.out.println(name + ", it is your turn to play! press any key to roll the dice!");
+        Scanner scan = new Scanner(System.in);
+        scan.next();
     }
     public static int diceRoll(String name) {
         int roll = (int)(6.0 * Math.random()) + 1;
@@ -151,6 +162,7 @@ public class main {
             startGame();
         } else {
             System.out.println("Goodbye! Hope you had fun! ");
+            quiz.disconnect();   // disconnect from website when done with the game.
             return;
         }
     }
