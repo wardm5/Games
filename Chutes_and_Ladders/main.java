@@ -81,22 +81,26 @@ public class main {
             Scanner strScan = new Scanner(System.in);
             String name = strScan.next();
             Person temp = new Person(name);
-            System.out.println("Do you want this player to be a computer? Enter 'yes' or 'no'.");
+            System.out.println("Do you want this player to be a human? Enter 'yes' or 'no'.");
             Scanner scan = new Scanner(System.in);
             String response = scan.next();
             while (!response.toLowerCase().equals("yes") && !response.toLowerCase().equals("no")) {
                 System.out.println("Please enter a valid response of either 'yes' or 'no'.");
                 response = scan.next();
             }
-            if (response.toLowerCase().equals("yes")) {
+            if (response.toLowerCase().equals("no")) {
                 temp.setComputer(true);
             }
             players.add(temp);
         }
     }
     public static int playGame() {
+        newLine();
+        int turn = 1;
         int maxPosition = 0;
         while (maxPosition <= 100) {
+            newLine();
+            System.out.println("************* TURN " + turn + " *************");
             for (int i = 0; i < numOfPlayers; i++) {
                 Person temp = players.get(i);
                 String name = temp.getName();
@@ -112,13 +116,14 @@ public class main {
                 if (position == 100)
                     return i;  // return winner index
             }
+            turn++;
         }
         return -1; // error code
     }
     public static void notifyPlayer(String name) {
-        System.out.println(name + ", it is your turn to play! press any key to roll the dice!");
+        System.out.println(name + ", it is your turn to play! Press enter to roll the dice!");
         Scanner scan = new Scanner(System.in);
-        scan.next();
+        scan.nextLine();
     }
     public static int diceRoll(String name) {
         int roll = (int)(6.0 * Math.random()) + 1;
