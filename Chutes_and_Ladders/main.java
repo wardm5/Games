@@ -14,10 +14,10 @@ public class main {
                 various other tweeks if needed.
          */
 
-        intro();    // intro to game, will only show up once even if the player wants to play again.
-        startGame();
-        // quiz = new API();
-        // System.out.println(quiz.getResponse());
+        // intro();    // intro to game, will only show up once even if the player wants to play again.
+        // startGame();
+        quiz = new API();
+        System.out.println(quiz.getResponse());
 
     }
     public static void startGame() {
@@ -57,6 +57,18 @@ public class main {
             System.out.print("Please re-enter the number of players:    ");
             numOfPlayers = scan.nextInt();
         }
+        System.out.print("Do you want to use quiz questions to use ladders and avoid shoots?");
+        // Scanner scan = new Scanner(System.in);
+        String response = scan.next();
+        while (!response.toLowerCase().equals("yes") && !response.toLowerCase().equals("no")) {
+            System.out.println("Please enter a valid response of either 'yes' or 'no'.");
+            response = scan.next();
+        }
+        if (response.toLowerCase().equals("yes"))
+            setupAPI();
+    }
+    public static void setupAPI() {
+
     }
     public static void setupBoard() {
         board = new int[101];
