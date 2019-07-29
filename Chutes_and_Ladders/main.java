@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.File;
+import com.google.gson.Gson;
 public class main {
     private static int numOfPlayers;
     private static int[] board;
@@ -18,7 +19,8 @@ public class main {
         // startGame();
         quiz = new API();
         System.out.println(quiz.getResponse());
-
+        // Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        MyType target2 = gson.fromJson(json, MyType.class); // deserializes json into target2
     }
     public static void startGame() {
         setupGame();

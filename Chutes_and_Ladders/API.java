@@ -11,7 +11,7 @@ public class API {
     private int response;
     public API() {
         try {
-            this.url = "https://opentdb.com/api.php?amount=" + 10;   // url for api
+            this.url = "https://opentdb.com/api.php?amount=" + 50;   // url for quiz
             this.con = sendGet(url);                                 // sets up Http connection to website
             this.json = getWebsiteString(con);                       // get website string (api json)
             this.response = getResponseCode(con);        // gets the response of the website
