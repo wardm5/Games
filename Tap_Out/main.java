@@ -1,12 +1,16 @@
 import java.util.*;
 public class main {
     private static Player[] players = new Player[2];
+    private static int numOfPlayers;
     public static void main(String[] args) {
-
-        System.out.println("hello world! Testing!");
         start();
+        setup();
+        playGame();
     }
     public static void start() {
+        System.out.println();
+        System.out.println();
+        System.out.println();
         System.out.println("Welcome to the finger game! ");
         System.out.print("How many players do you want to name? (min of 0, max of 2) ");
         Scanner scan = new Scanner(System.in);
@@ -15,6 +19,8 @@ public class main {
             System.out.print("How many players do you want to name? (min of 0, max of 2) ");
             numOfPlayers = scan.nextInt();
         }
+    }
+    public static void setup() {
         for (int i = 0; i < 2; i++) {
             if (numOfPlayers > 0) {
                 System.out.print("What would you like to name Player " + (i+1) + "? ");
@@ -30,6 +36,8 @@ public class main {
                 players[i] = player1;
             }
         }
+    }
+    public static void playGame() {
         int turn = 0;
         while (!players[0].hasLost() && !players[1].hasLost()) {
             if (turn % 2 == 0) {
@@ -60,12 +68,12 @@ public class main {
 
         }
 
-        System.out.print("Which hand do you choose to attack with? (enter 'right' or 'left')  ");
+        System.out.print("Which of your hands do you want to use to attack?? (enter 'right' or 'left')  ");
         Scanner scan = new Scanner(System.in);
         String temp = scan.nextLine();
         int attack = 0;
         while (!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right")) {
-            System.out.print("Which hand do you choose to attack with? (enter 'right' or 'left')  ");
+            System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
             temp = scan.nextLine();
         }
 
@@ -74,6 +82,7 @@ public class main {
         else
             attack = players[p1].attack(true);
         // System.out.print("Which of your opponent's hands do you want to attack?");
+
 
 
         if (temp.toLowerCase().equals("left"))
