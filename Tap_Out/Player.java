@@ -59,5 +59,9 @@ public class Player {
     public int getRightFingerCount() {
         return fingerCountRight;
     }
+    public void split() {
+        this.fingerCountRight /= 2;
+        this.fingerCountLeft = this.fingerCountRight;
+    }
 
 }

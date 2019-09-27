@@ -1,13 +1,12 @@
 import java.util.*;
 public class main {
     private static Player[] players = new Player[2];
-    private static int numOfPlayers;
     public static void main(String[] args) {
-        start();
-        setup();
+        int numOfPlayers = start();
+        setup(numOfPlayers);
         playGame();
     }
-    public static void start() {
+    public static int start() {
         System.out.println();
         System.out.println();
         System.out.println();
@@ -19,8 +18,9 @@ public class main {
             System.out.print("How many players do you want to name? (min of 0, max of 2) ");
             numOfPlayers = scan.nextInt();
         }
+        return numOfPlayers;
     }
-    public static void setup() {
+    public static void setup(int numOfPlayers) {
         for (int i = 0; i < 2; i++) {
             if (numOfPlayers > 0) {
                 System.out.print("What would you like to name Player " + (i+1) + "? ");
@@ -36,6 +36,8 @@ public class main {
                 players[i] = player1;
             }
         }
+        System.out.println();
+        System.out.println();
     }
     public static void playGame() {
         int turn = 0;
@@ -60,13 +62,8 @@ public class main {
         System.out.println("Your opponent's finger count is: ");
         players[p2].showFingerCounts();
 
-        if (   players[p1].getLeftFingerCount() > 0 && players[p1].getLeftFingerCount() % 2 == 0
-            && players[p1].getRightFingerCount() > 0 && players[p1].getRightFingerCount() % 2 == 0) {
-            System.out.println("You have the option to split! Do you want to do this? (enter 'yes' or 'no')");
-            //user input
-            Scanner temp = new Scanner(System.in); // need to finish...
-
-        }
+        //  SPLIT SECTION, asks user if they want to split due to having greater than 1 finger in each hand that are also even.
+        split(players[p1]);
 
         System.out.print("Which of your hands do you want to use to attack?? (enter 'right' or 'left')  ");
         Scanner scan = new Scanner(System.in);
@@ -76,18 +73,33 @@ public class main {
             System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
             temp = scan.nextLine();
         }
-
         if (temp.toLowerCase().equals("left"))
             attack = players[p1].attack(false);
         else
             attack = players[p1].attack(true);
         // System.out.print("Which of your opponent's hands do you want to attack?");
 
-
-
         if (temp.toLowerCase().equals("left"))
             players[p2].updateFingers(attack, false);
         else
             players[p2].updateFingers(attack, true);
+    }
+    public static void split(Player p1) {
+        if ( p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0
+            && p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0) {
+            System.out.println("You have the option to split! Do you want to do this? (enter 'yes' or 'no')");
+            //user input
+            Scanner temp = new Scanner(System.in); // need to finish...
+            String str = temp.nextLine();
+            while (!str.toLowerCase().equals("yes") && str.toLowerCase().equals("no")) {
+                System.out.println("Incorrect entry, enter 'yes' or 'no')");
+                //user input
+                str = temp.nextLine(); // need to finish...
+            }
+            if (str.equals("yes")) {
+                p1.split();
+                return;
+            }
+        }
     }
 }
