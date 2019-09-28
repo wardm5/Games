@@ -24,7 +24,6 @@ public class Player {
         //     System.out.print("|");
         // }
         System.out.println();
-        System.out.println();
     }
     public void updatePlayerName(String name) {
         this.name = name;
