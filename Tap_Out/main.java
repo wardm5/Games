@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 public class main {
     private static Player[] players = new Player[2];
     public static void main(String[] args) {
