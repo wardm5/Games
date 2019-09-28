@@ -63,43 +63,85 @@ public class main {
         players[p2].showFingerCounts();
 
         //  SPLIT SECTION, asks user if they want to split due to having greater than 1 finger in each hand that are also even.
-        split(players[p1]);
+        if (split(players[p1]))
+            return;
 
-        System.out.print("Which of your hands do you want to use to attack?? (enter 'right' or 'left')  ");
-        Scanner scan = new Scanner(System.in);
-        String temp = scan.nextLine();
-        int attack = 0;
-        while (!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right")) {
-            System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
-            temp = scan.nextLine();
-        }
-        if (temp.toLowerCase().equals("left"))
-            attack = players[p1].attack(false);
-        else
-            attack = players[p1].attack(true);
-        // System.out.print("Which of your opponent's hands do you want to attack?");
-
-        if (temp.toLowerCase().equals("left"))
-            players[p2].updateFingers(attack, false);
-        else
-            players[p2].updateFingers(attack, true);
+        // PICK YOUR HAND TO ATTACK WITH
+        int attack = pickYourHand(players[p1]);
+        pickOppHand(players[p2] ,attack);
     }
-    public static void split(Player p1) {
-        if ( p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0
-            && p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0) {
+    public static boolean split(Player p1) {
+        if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
+            || (p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0 && p1.getLeftFingerCount() == 0)) {
             System.out.println("You have the option to split! Do you want to do this? (enter 'yes' or 'no')");
             //user input
             Scanner temp = new Scanner(System.in); // need to finish...
             String str = temp.nextLine();
-            while (!str.toLowerCase().equals("yes") && str.toLowerCase().equals("no")) {
+            while (!str.toLowerCase().equals("yes") && !str.toLowerCase().equals("no")) {
                 System.out.println("Incorrect entry, enter 'yes' or 'no')");
-                //user input
                 str = temp.nextLine(); // need to finish...
             }
             if (str.equals("yes")) {
                 p1.split();
-                return;
+                return true;
             }
+            return false;
         }
+    }
+    public static int pickYourHand(Player p1) {
+        System.out.print("Which of your hands do you want to use to attack?? (enter 'right' or 'left')  ");
+        Scanner scan = new Scanner(System.in);
+        String temp = scan.nextLine();
+        int attack = 0;
+        while ((!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right")) || attack <= 0) {
+            if (!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right")) {
+                System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
+                temp = scan.nextLine();
+                continue;
+            }
+            if (temp.toLowerCase().equals("left"))
+                attack = p1.attack(false);
+            else
+                attack = p1.attack(true);
+            System.out.println(attack);
+            if (attack == -1) {
+                System.out.println("The hand you chose has zero fingers left, please choose the other hand. ");
+                temp = scan.nextLine();
+            }
+            // if (temp.toLowerCase().equals("left"))
+            //     attack = p1.attack(false);
+            // else
+            //     attack = p1.attack(true);
+        }
+        // if (temp.toLowerCase().equals("left"))
+        //     attack = players[p1].attack(false);
+        // else
+        //     attack = players[p1].attack(true);
+        // return attack;
+        return attack;
+    }
+    public static void pickOppHand(Player p2, int attack) {
+        System.out.print("Which of your opponent's hands do you want to attack?");
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        int opponentHand = 1;
+        while ((!str.toLowerCase().equals("left") && !str.toLowerCase().equals("right")) || (opponentHand <= 0)) {
+            if (opponentHand <= 0)
+                System.out.println("The hand you chose had 0 fingers, please choose the other hand.");
+            else
+                System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
+            str = scan.nextLine();
+            if (!str.toLowerCase().equals("left") && !str.toLowerCase().equals("right"))
+                break;
+            if (str.toLowerCase().equals("right"))
+                opponentHand = p2.getHand(true);
+            else
+                opponentHand = p2.getHand(false);
+        }
+        System.out.println("This is a test to see what happens to p2: " + p2.getName() + "   attack = " + attack);
+        if (str.toLowerCase().equals("left"))
+            p2.updateFingers(attack, false);
+        else
+            p2.updateFingers(attack, true);
     }
 }

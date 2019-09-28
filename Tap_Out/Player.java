@@ -60,8 +60,13 @@ public class Player {
         return fingerCountRight;
     }
     public void split() {
-        this.fingerCountRight /= 2;
+        this.fingerCountRight = (this.fingerCountRight + this.fingerCountLeft)/2;
         this.fingerCountLeft = this.fingerCountRight;
+    }
+    public int getHand(boolean check) {
+        if (check)
+            return fingerCountRight;
+        return fingerCountLeft;
     }
 
 }
