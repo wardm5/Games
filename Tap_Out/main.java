@@ -5,12 +5,10 @@ public class main {
         int numOfPlayers = start();
         setup(numOfPlayers);
         playGame();
+        // playAgainQuestion();
     }
     public static int start() {
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("Welcome to the finger game! ");
+        System.out.println("\n\n\nWelcome to the finger game! ");
         System.out.print("How many players do you want to name? (min of 0, max of 2) ");
         Scanner scan = new Scanner(System.in);
         int numOfPlayers = scan.nextInt();
@@ -53,8 +51,11 @@ public class main {
             System.out.println(players[1].getName() + " has won!! ");
         else
             System.out.println(players[0].getName() + " has won!!");
-        // end game announcement
+        System.out.println("Thank you for playing! ");
     }
+    // public static void playAgainQuestion() {
+    //
+    // }
     public static void turn(int p1, int p2) {
         System.out.println("\n" + players[p1].getName() + ", it is your turn!!   ");
         System.out.println("Your finger counts are below: ");
@@ -74,18 +75,16 @@ public class main {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
             || (p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0 && p1.getLeftFingerCount() == 0)) {
             System.out.println("You have the option to split! Do you want to do this? (enter 'yes' or 'no')   ");
-            //user input
-            Scanner temp = new Scanner(System.in); // need to finish...
+            Scanner temp = new Scanner(System.in);
             String str = temp.nextLine();
             while (!str.toLowerCase().equals("yes") && !str.toLowerCase().equals("no")) {
                 System.out.println("Incorrect entry, enter 'yes' or 'no')   ");
-                str = temp.nextLine(); // need to finish...
+                str = temp.nextLine();
             }
             if (str.equals("yes")) {
                 p1.split();
                 return true;
             }
-
         }
         return false;
     }
@@ -123,8 +122,6 @@ public class main {
                 str = scan.nextLine();
                 continue;
             }
-            // if (!str.toLowerCase().trim().equals("left") && !str.toLowerCase().trim().equals("right"))
-            //     break;
             if (str.toLowerCase().trim().equals("right"))
                 opponentHand = p2.getHand(true);
             else
@@ -135,7 +132,6 @@ public class main {
                 continue;
             }
         }
-        // System.out.println("This is a test to see what happens to p2: " + p2.getName() + "   attack = " + attack);
         if (str.toLowerCase().equals("left"))
             p2.updateFingers(attack, false);
         else
