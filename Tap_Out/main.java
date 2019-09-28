@@ -50,13 +50,13 @@ public class main {
             turn++;
         }
         if (players[0].hasLost())
-            System.out.println("Player 2 has won!! ");
+            System.out.println(players[1].getName() + " has won!! ");
         else
-            System.out.println("Player 1 has won!!");
+            System.out.println(players[0].getName() + " has won!!");
         // end game announcement
     }
     public static void turn(int p1, int p2) {
-        System.out.println(players[p1].getName() + ", it is your turn!!   ");
+        System.out.println("\n" + players[p1].getName() + ", it is your turn!!   ");
         System.out.println("Your finger counts are below: ");
         players[p1].showFingerCounts();
         System.out.println("Your opponent's finger count is:   ");
@@ -105,8 +105,9 @@ public class main {
             else
                 attack = p1.attack(true);
             if (attack == -1) {
-                System.out.println("The hand you chose has zero fingers left, please choose the other hand.   ");
+                System.out.print("The hand you chose has zero fingers left, please choose the other hand.   ");
                 temp = scan.nextLine();
+                continue;
             }
         }
         return attack;
@@ -115,19 +116,24 @@ public class main {
         System.out.print("Which of your opponent's hands do you want to attack?   ");
         Scanner scan = new Scanner(System.in);
         String str = scan.nextLine();
-        int opponentHand = -1;
+        int opponentHand = 0;
         while ((!str.toLowerCase().trim().equals("left") && !str.toLowerCase().trim().equals("right")) || (opponentHand <= 0)) {
-            if (opponentHand <= 0)
-                System.out.println("The hand you chose had 0 fingers, please choose the other hand.   ");
-            else
+            if (!str.toLowerCase().equals("left") && !str.toLowerCase().equals("right")) {
                 System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
-            str = scan.nextLine();
-            if (!str.toLowerCase().trim().equals("left") && !str.toLowerCase().trim().equals("right"))
-                break;
+                str = scan.nextLine();
+                continue;
+            }
+            // if (!str.toLowerCase().trim().equals("left") && !str.toLowerCase().trim().equals("right"))
+            //     break;
             if (str.toLowerCase().trim().equals("right"))
                 opponentHand = p2.getHand(true);
             else
                 opponentHand = p2.getHand(false);
+            if (opponentHand <= 0) {
+                System.out.print("The hand you chose had 0 fingers, please choose the other hand.   ");
+                str = scan.nextLine();
+                continue;
+            }
         }
         // System.out.println("This is a test to see what happens to p2: " + p2.getName() + "   attack = " + attack);
         if (str.toLowerCase().equals("left"))
