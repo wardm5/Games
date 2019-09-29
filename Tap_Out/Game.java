@@ -9,11 +9,17 @@ public class Game {
         playGame();
         if (playAgainQuestion())
             return true;
-        System.out.println("Thanks for playing, hope you want to play again soon!  ");
+        print("Thanks for playing, hope you want to play again soon!  ");
         return false;
     }
     private int start() {
-        System.out.println("\n\n\nWelcome to the Tap Out game! ");
+        print("\n\n\nWelcome to the Tap Out game! ");
+        print("Please choose an option:  ");
+        // print
+
+
+
+
         System.out.print("How many players do you want to name? (min of 0, max of 2) ");
         Scanner scan = new Scanner(System.in);
         int numOfPlayers = scan.nextInt();
@@ -39,8 +45,8 @@ public class Game {
                 players[i] = player1;
             }
         }
-        System.out.println();
-        System.out.println();
+        print();
+        print();
     }
     private void playGame() {
         int turn = 0;
@@ -53,28 +59,28 @@ public class Game {
             turn++;
         }
         if (players[0].hasLost())
-            System.out.println(players[1].getName() + " has won!! ");
+            print(players[1].getName() + " has won!! ");
         else
-            System.out.println(players[0].getName() + " has won!!");
-        System.out.println("Thank you for playing! ");
+            print(players[0].getName() + " has won!!");
+        print("Thank you for playing! ");
     }
     private boolean playAgainQuestion() {
-        System.out.println("Do you want to play again?  (enter 'yes', 'y', 'no', 'n')   ");
+        print("Do you want to play again?  (enter 'yes', 'y', 'no', 'n')   ");
         Scanner scan = new Scanner(System.in);
         String str = scan.nextLine();
         str = standardizeUserInput(str);
         while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
-            System.out.println("Incorrect entry, enter 'yes', 'y', 'no', or 'n')   ");
+            print("Incorrect entry, enter 'yes', 'y', 'no', or 'n')   ");
             str = scan.nextLine();
             str = standardizeUserInput(str);
         }
         return (str.equals("yes") || str.equals("y"));
     }
     private void turn(int p1, int p2) {
-        System.out.println("\n" + players[p1].getName() + ", it is your turn!!   ");
-        System.out.println(players[p1].getName() + "'s finger count below:  ");
+        print("\n" + players[p1].getName() + ", it is your turn!!   ");
+        print(players[p1].getName() + "'s finger count below:  ");
         players[p1].showFingerCounts();
-        System.out.println("Your opponent's finger count is:   ");
+        print("Your opponent's finger count is:   ");
         players[p2].showFingerCounts();
 
         //  SPLIT SECTION, asks user if they want to split due to having greater than 1 finger in each hand that are also even.
@@ -88,12 +94,12 @@ public class Game {
     private boolean split(Player p1) {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
             || (p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0 && p1.getLeftFingerCount() == 0)) {
-            System.out.println("You have the option to split! Do you want to do this? (enter 'yes', 'no', 'y', or 'n')   ");
+            print("You have the option to split! Do you want to do this? (enter 'yes', 'no', 'y', or 'n')   ");
             Scanner temp = new Scanner(System.in);
             String str = temp.nextLine();
             str = standardizeUserInput(str);
             while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
-                System.out.println("Incorrect entry, enter 'yes' or 'no')   ");
+                print("Incorrect entry, enter 'yes' or 'no')   ");
                 str = temp.nextLine();
                 str = standardizeUserInput(str);
             }
@@ -163,5 +169,11 @@ public class Game {
     }
     private boolean checkUserInput(String str) {
         return (!str.equals("left") && !str.equals("right") && !str.equals("r") && !str.equals("l"));
+    }
+    private void print() {
+        System.out.println();
+    }
+    private void print(String str) {
+        System.out.println(str);
     }
 }
