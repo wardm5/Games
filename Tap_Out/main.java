@@ -128,9 +128,9 @@ public class main {
         String str = scan.nextLine();
         str = standardizeUserInput(str);
         int opponentHand = 0;
-        while ((!str.equals("left") && !str.equals("right")) || (opponentHand <= 0)) {
-            if (!str.equals("left") && !str.equals("right")) {
-                System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
+        while ((!str.equals("left") && !str.equals("right") && !str.equals("r") && !str.equals("l")) || (opponentHand <= 0)) {
+            if (!str.equals("left") && !str.equals("right") && !str.equals("r") && !str.equals("l")) {
+                System.out.print("Incorrect entry, enter 'right', 'r', 'left', or 'l'.  ");
                 str = scan.nextLine();
                 str = standardizeUserInput(str);
                 continue;
