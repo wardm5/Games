@@ -1,4 +1,15 @@
 import java.util.Scanner;
+
+/********************************************************************************
+*                                                                               *
+*                                                                               *
+*                                                                               *
+*
+*                                                                               *
+*                                                                               *
+*                                                                               *
+/*******************************************************************************/
+
 public class main {
     private static Player[] players = new Player[2];
     public static void main(String[] args) {
@@ -74,10 +85,10 @@ public class main {
     public static boolean split(Player p1) {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
             || (p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0 && p1.getLeftFingerCount() == 0)) {
-            System.out.println("You have the option to split! Do you want to do this? (enter 'yes' or 'no')   ");
+            System.out.println("You have the option to split! Do you want to do this? (enter 'yes', 'no', 'y', or 'n')   ");
             Scanner temp = new Scanner(System.in);
             String str = temp.nextLine();
-            while (!str.toLowerCase().equals("yes") && !str.toLowerCase().equals("no")) {
+            while (!str.toLowerCase().equals("yes") && !str.toLowerCase().equals("no") && !str.toLowerCase().equals("y") && !str.toLowerCase().equals("n")) {
                 System.out.println("Incorrect entry, enter 'yes' or 'no')   ");
                 str = temp.nextLine();
             }
@@ -89,13 +100,13 @@ public class main {
         return false;
     }
     public static int pickYourHand(Player p1) {
-        System.out.print("Which of your hands do you want to use to attack?? (enter 'right' or 'left')  ");
+        System.out.print("Which of your hands do you want to use to attack?? (enter 'right', 'r', 'left', or 'l')  ");
         Scanner scan = new Scanner(System.in);
         String temp = scan.nextLine();
         int attack = 0;
-        while ((!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right")) || attack <= 0) {
+        while ((!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right") && !temp.toLowerCase().equals("r") && !temp.toLowerCase().equals("l")) || attack <= 0) {
             if (!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right")) {
-                System.out.print("Incorrect entry, enter 'right' or 'left'.  ");
+                System.out.print("Incorrect entry, enter 'right','r', 'left', or 'l'.  ");
                 temp = scan.nextLine();
                 continue;
             }
