@@ -88,11 +88,13 @@ public class main {
             System.out.println("You have the option to split! Do you want to do this? (enter 'yes', 'no', 'y', or 'n')   ");
             Scanner temp = new Scanner(System.in);
             String str = temp.nextLine();
-            while (!str.toLowerCase().equals("yes") && !str.toLowerCase().equals("no") && !str.toLowerCase().equals("y") && !str.toLowerCase().equals("n")) {
+            str = standardizeUserInput(str);
+            while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
                 System.out.println("Incorrect entry, enter 'yes' or 'no')   ");
                 str = temp.nextLine();
+                str = standardizeUserInput(str);
             }
-            if (str.equals("yes")) {
+            if (str.equals("yes") && str.equals("y")) {
                 p1.split();
                 return true;
             }
@@ -102,21 +104,24 @@ public class main {
     public static int pickYourHand(Player p1) {
         System.out.print("Which of your hands do you want to use to attack?? (enter 'right', 'r', 'left', or 'l')  ");
         Scanner scan = new Scanner(System.in);
-        String temp = scan.nextLine();
+        String str = scan.nextLine();
+        str = standardizeUserInput(str);
         int attack = 0;
-        while ((!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right") && !temp.toLowerCase().equals("r") && !temp.toLowerCase().equals("l")) || attack <= 0) {
-            if (!temp.toLowerCase().equals("left") && !temp.toLowerCase().equals("right") && !temp.toLowerCase().equals("r") && !temp.toLowerCase().equals("l") ) {
+        while (checkUserInput(str) || attack <= 0) {
+            if (checkUserInput(str)) {
                 System.out.print("Incorrect entry, enter 'right','r', 'left', or 'l'.  ");
-                temp = scan.nextLine();
+                str = scan.nextLine();
+                str = standardizeUserInput(str);
                 continue;
             }
-            if (temp.toLowerCase().equals("left"))
+            if (str.toLowerCase().equals("left"))
                 attack = p1.attack(false);
             else
                 attack = p1.attack(true);
             if (attack == -1) {
                 System.out.print("The hand you chose has zero fingers left, please choose the other hand.   ");
-                temp = scan.nextLine();
+                str = scan.nextLine();
+                str = standardizeUserInput(str);
                 continue;
             }
         }
@@ -128,8 +133,8 @@ public class main {
         String str = scan.nextLine();
         str = standardizeUserInput(str);
         int opponentHand = 0;
-        while ((!str.equals("left") && !str.equals("right") && !str.equals("r") && !str.equals("l")) || (opponentHand <= 0)) {
-            if (!str.equals("left") && !str.equals("right") && !str.equals("r") && !str.equals("l")) {
+        while (checkUserInput(str) || (opponentHand <= 0)) {
+            if (checkUserInput(str)) {
                 System.out.print("Incorrect entry, enter 'right', 'r', 'left', or 'l'.  ");
                 str = scan.nextLine();
                 str = standardizeUserInput(str);
@@ -152,5 +157,8 @@ public class main {
     }
     public static String standardizeUserInput(String s) {
         return s.trim().toLowerCase();
+    }
+    public static boolean checkUserInput(String str) {
+        return (!str.equals("left") && !str.equals("right") && !str.equals("r") && !str.equals("l"));
     }
 }
