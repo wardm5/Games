@@ -15,7 +15,7 @@ public class main {
         Game game = new Game();
         boolean playGame = true;
         while (playGame) {
-            playGame = game.beginGame();
+            playGame = game.homeScreen();
         }
     }
 }
