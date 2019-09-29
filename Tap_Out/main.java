@@ -13,10 +13,14 @@ import java.util.Scanner;
 public class main {
     private static Player[] players = new Player[2];
     public static void main(String[] args) {
+        beginGame();
+    }
+    public static void beginGame() {
         int numOfPlayers = start();
         setup(numOfPlayers);
         playGame();
-        // playAgainQuestion();
+        playAgainQuestion();
+        System.out.println("Thanks for playing, hope you want to play again soon!  ");
     }
     public static int start() {
         System.out.println("\n\n\nWelcome to the finger game! ");
@@ -64,12 +68,24 @@ public class main {
             System.out.println(players[0].getName() + " has won!!");
         System.out.println("Thank you for playing! ");
     }
-    // public static void playAgainQuestion() {
-    //
-    // }
+    public static void playAgainQuestion() {
+        System.out.println("Do you want to play again?  (enter 'yes', 'y', 'no', 'n')   ");
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        str = standardizeUserInput(str);
+        while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
+            System.out.println("Incorrect entry, enter 'yes', 'y', 'no', or 'n')   ");
+            str = scan.nextLine();
+            str = standardizeUserInput(str);
+        }
+        if (str.equals("yes") || str.equals("y")) {
+            beginGame();
+        }
+
+    }
     public static void turn(int p1, int p2) {
         System.out.println("\n" + players[p1].getName() + ", it is your turn!!   ");
-        System.out.println("Your finger counts are below: ");
+        System.out.println(players[p1].getName() + "'s finger count below:  ");
         players[p1].showFingerCounts();
         System.out.println("Your opponent's finger count is:   ");
         players[p2].showFingerCounts();
@@ -94,7 +110,7 @@ public class main {
                 str = temp.nextLine();
                 str = standardizeUserInput(str);
             }
-            if (str.equals("yes") && str.equals("y")) {
+            if (str.equals("yes") || str.equals("y")) {
                 p1.split();
                 return true;
             }
@@ -114,7 +130,7 @@ public class main {
                 str = standardizeUserInput(str);
                 continue;
             }
-            if (str.toLowerCase().equals("left"))
+            if (str.equals("left") || str.equals("l"))
                 attack = p1.attack(false);
             else
                 attack = p1.attack(true);
@@ -140,7 +156,7 @@ public class main {
                 str = standardizeUserInput(str);
                 continue;
             }
-            if (str.toLowerCase().trim().equals("right"))
+            if (str.equals("right") || str.equals("r"))
                 opponentHand = p2.getHand(true);
             else
                 opponentHand = p2.getHand(false);
@@ -150,7 +166,7 @@ public class main {
                 continue;
             }
         }
-        if (str.toLowerCase().equals("left"))
+        if (str.equals("left") || str.equals("l"))
             p2.updateFingers(attack, false);
         else
             p2.updateFingers(attack, true);

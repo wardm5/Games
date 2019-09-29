@@ -13,16 +13,8 @@ public class Player {
         this.fingerCountRight = 1;
     }
     public void showFingerCounts() {
-        System.out.println("RIGHT hand has " + fingerCountRight + " fingers up. ");
-        System.out.println("LEFT hand has " + fingerCountLeft + " fingers up. ");
-        // System.out.print("LEFT HAND:   ");
-        // for (int i = 0; i < fingerCountLeft; i++) {
-        //     System.out.print("|");
-        // }
-        // System.out.print("     RIGHT HAND:   ");
-        // for (int i = 0; i < fingerCountRight; i++) {
-        //     System.out.print("|");
-        // }
+        System.out.println("RIGHT:  " + fingerCountRight + "  ");
+        System.out.println("LEFT:   " + fingerCountLeft + "  ");
         System.out.println();
     }
     public void updatePlayerName(String name) {
