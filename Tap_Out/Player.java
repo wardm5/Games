@@ -2,15 +2,24 @@ public class Player {
     String name;
     int fingerCountLeft;
     int fingerCountRight;
-    public Player() {
+    boolean isComputer;
+    public Player() {  // never really use this...
         this.name = "";
         this.fingerCountLeft = 1;
         this.fingerCountRight = 1;
+        this.isComputer = true;
     }
     public Player(String name) {
         this.name = name;
         this.fingerCountLeft = 1;
         this.fingerCountRight = 1;
+        this.isComputer = false;
+    }
+    public Player(boolean isComputer) {
+        this.name = name;
+        this.fingerCountLeft = 1;
+        this.fingerCountRight = 1;
+        this.isComputer = isComputer;
     }
     public void showFingerCounts() {
         System.out.println("RIGHT:  " + fingerCountRight + "  ");

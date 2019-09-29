@@ -1,14 +1,19 @@
+import java.util.*;
 public class Game {
+    public Game() {}
+    // private List<Player> players;
     private Player[] players = new Player[2];
-    public void beginGame() {
+    public boolean beginGame() {
         int numOfPlayers = start();
         setup(numOfPlayers);
         playGame();
-        playAgainQuestion();
+        if (playAgainQuestion())
+            return true;
         System.out.println("Thanks for playing, hope you want to play again soon!  ");
+        return false;
     }
     private int start() {
-        System.out.println("\n\n\nWelcome to the finger game! ");
+        System.out.println("\n\n\nWelcome to the Tap Out game! ");
         System.out.print("How many players do you want to name? (min of 0, max of 2) ");
         Scanner scan = new Scanner(System.in);
         int numOfPlayers = scan.nextInt();
@@ -53,7 +58,7 @@ public class Game {
             System.out.println(players[0].getName() + " has won!!");
         System.out.println("Thank you for playing! ");
     }
-    private void playAgainQuestion() {
+    private boolean playAgainQuestion() {
         System.out.println("Do you want to play again?  (enter 'yes', 'y', 'no', 'n')   ");
         Scanner scan = new Scanner(System.in);
         String str = scan.nextLine();
@@ -63,9 +68,7 @@ public class Game {
             str = scan.nextLine();
             str = standardizeUserInput(str);
         }
-        if (str.equals("yes") || str.equals("y")) {
-            beginGame();
-        }
+        return (str.equals("yes") || str.equals("y"));
     }
     private void turn(int p1, int p2) {
         System.out.println("\n" + players[p1].getName() + ", it is your turn!!   ");
