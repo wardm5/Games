@@ -1,5 +1,6 @@
 import java.util.*;
 public class Game {
+    public Options options = new Options();
     public Game() {}
     private List<Player> playersList;
     private Player[] players = new Player[2];
@@ -16,7 +17,6 @@ public class Game {
         if (input == 1)
             return beginGame();
         else if (input == 2)
-            // options TBD
             System.out.println("testing options");
         else
             return false;
