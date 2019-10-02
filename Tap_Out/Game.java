@@ -17,10 +17,25 @@ public class Game {
         if (input == 1)
             return beginGame();
         else if (input == 2)
-            System.out.println("testing options");
+            settings();
         else
             return false;
-        return false;
+    }
+    private void settings() {
+        print("The game settings are below:  ");
+        print("AI:  " + options.getAI());
+        print("Update Game Text:  " + options.getDisplayTest());
+        print("Do you want to change these game settings?  ");
+        // yes/no
+
+        // ask which option the user wants to update
+            // update option
+        // repeat
+
+        // ask if done editing Options
+
+        // if yes, go to homeScreen
+        // else repeat
     }
     private void reviewOptions() {
         print("Please choose an option (integer):  ");
@@ -38,16 +53,17 @@ public class Game {
         return false;
     }
     private int start() {
-        print("How many players do you want to name? (min of 0, max of 2) ");
+        print("How many players do you want to name? (min of 2, max of 8) ");
         int numOfPlayers = userIntInput();
-        while (numOfPlayers > 2 || numOfPlayers < 0) {
-            print("How many players do you want to name? (min of 0, max of 2) ");
+        while (numOfPlayers > 8 || numOfPlayers < 2) {
+            print("How many players do you want to name? (min of 2, max of 8) ");
             numOfPlayers = userIntInput();
         }
         return numOfPlayers;
     }
     private void setup(int numOfPlayers) {
-        for (int i = 0; i < 2; i++) {
+
+        for (int i = 0; i < numOfPlayers; i++) {
             if (numOfPlayers > 0) {
                 print("What would you like to name Player " + (i+1) + "? ");
                 // Scanner test = new Scanner(System.in);
@@ -55,8 +71,8 @@ public class Game {
                 Player player1 = new Player(tempName);
 
                 numOfPlayers--;
+                playersList.add(player1);
                 players[i] = player1;
-
             } else {
                 Player player1 = new Player("Player " + (i+1));
                 players[i] = player1;
