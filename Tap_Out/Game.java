@@ -1,9 +1,11 @@
 import java.util.*;
 public class Game {
-    public Options options = new Options();
+    public Settings settings = new Settings();
     public Game() {}
     private List<Player> playersList;
     private Player[] players = new Player[2];
+
+
     public boolean homeScreen() {
         print("\n\n\nWelcome to the Tap Out game! ");
         reviewOptions();
@@ -23,8 +25,8 @@ public class Game {
     }
     private void settings() {
         print("The game settings are below:  ");
-        print("AI:  " + options.getAI());
-        print("Update Game Text:  " + options.getDisplayTest());
+        print("AI:  " + settings.getAI());
+        print("Update Game Text:  " + settings.getDisplayTest());
         print("Do you want to change these game settings?  ");
         // yes/no
 
@@ -37,6 +39,7 @@ public class Game {
         // if yes, go to homeScreen
         // else repeat
     }
+
     private void reviewOptions() {
         print("Please choose an option (integer):  ");
         print("  1 - Play Game! ");
