@@ -11,7 +11,7 @@ public class Game {
         reviewOptions();
         int input = userIntInput();
         while (input > 3 || input < 0) {
-            print("Which option do you want to pick? (enter 1, 2, 3, or 4 to review options) ");
+            printNoNewLine("Which option do you want to pick? (enter 1, 2, 3, or 4 to review options) ");
             input = userIntInput();
             if (input == 4)
                 reviewOptions();
@@ -23,10 +23,10 @@ public class Game {
         return false;
     }
     private void viewSettings() {
-        print("\nThe game settings are below:  ");
-        print("AI:  " + settings.printAI_LevelSetting());
-        print("Update Game Text:  " + settings.printDisplayTextSetting());
-        printNoNewLine("Do you want to change these game settings?  ");
+        print("\nThe game settings are below:  \n");
+        print("AI:                  " + settings.printAI_LevelSetting());
+        print("Update Game Text:    " + settings.printDisplayTextSetting());
+        printNoNewLine("\nDo you want to change these game settings?  (enter 'yes', 'y', 'no', 'n')");
         // yes/no
         String str = userStringInput();
         while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
@@ -67,10 +67,10 @@ public class Game {
         return false;
     }
     private int start() {
-        print("How many players do you want to name? (min of 2, max of 8) ");
+        printNoNewLine("How many players do you want to name? (min of 2, max of 8) ");
         int numOfPlayers = userIntInput();
         while (numOfPlayers > 8 || numOfPlayers < 2) {
-            print("How many players do you want to name? (min of 2, max of 8) ");
+            printNoNewLine("How many players do you want to name? (min of 2, max of 8) ");
             numOfPlayers = userIntInput();
         }
         return numOfPlayers;
@@ -79,7 +79,7 @@ public class Game {
 
         for (int i = 0; i < numOfPlayers; i++) {
             if (numOfPlayers > 0) {
-                print("What would you like to name Player " + (i+1) + "? ");
+                printNoNewLine("What would you like to name Player " + (i+1) + "? ");
                 // Scanner test = new Scanner(System.in);
                 String tempName = userStringInput();
                 Player player1 = new Player(tempName);
@@ -137,7 +137,7 @@ public class Game {
     private boolean split(Player p1) {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
             || (p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0 && p1.getLeftFingerCount() == 0)) {
-            print("You have the option to split! Do you want to do this? (enter 'yes', 'no', 'y', or 'n')   ");
+            printNoNewLine("You have the option to split! Do you want to do this? (enter 'yes', 'no', 'y', or 'n')   ");
             String str = userStringInput();
             while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
                 print("Incorrect entry, enter 'yes' or 'no')   ");
@@ -151,7 +151,7 @@ public class Game {
         return false;
     }
     private int pickYourHand(Player p1) {
-        print("Which of your hands do you want to use to attack?? (enter 'right', 'r', 'left', or 'l')  ");
+        printNoNewLine("Which of your hands do you want to use to attack?? (enter 'right', 'r', 'left', or 'l')  ");
         String str = userStringInput();
         int attack = 0;
         while (checkUserInput(str) || attack <= 0) {
@@ -173,7 +173,7 @@ public class Game {
         return attack;
     }
     private void pickOppHand(Player p2, int attack) {
-        print("Which of your opponent's hands do you want to attack?   ");
+        printNoNewLine("Which of your opponent's hands do you want to attack?   ");
         String str = userStringInput();
         int opponentHand = 0;
         while (checkUserInput(str) || (opponentHand <= 0)) {
