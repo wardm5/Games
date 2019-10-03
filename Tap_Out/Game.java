@@ -26,14 +26,14 @@ public class Game {
         print("\nThe game settings are below:  ");
         print("AI:  " + settings.printAI_LevelSetting());
         print("Update Game Text:  " + settings.printDisplayTextSetting());
-        print("Do you want to change these game settings?  ");
+        printNoNewLine("Do you want to change these game settings?  ");
         // yes/no
-
         String str = userStringInput();
         while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
             print("Incorrect entry, enter 'yes', 'y', 'no', or 'n')   ");
             str = userStringInput();
         }
+
         if (str.equals("yes") || str.equals("y"))
             changeSettings();
             // ask which option the user wants to update
@@ -210,6 +210,9 @@ public class Game {
     }
     private void print(String str) {
         System.out.println(str);
+    }
+    private void printNoNewLine(String str) {
+        System.out.print(str);
     }
     private String userStringInput() {
         Scanner scan = new Scanner(System.in);
