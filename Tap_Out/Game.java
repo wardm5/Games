@@ -7,26 +7,52 @@ public class Game {
 
 
     public boolean homeScreen() {
-        print("\n\n\nWelcome to the Tap Out game! ");
-        reviewOptions();
-        int input = userIntInput();
-        while (input > 3 || input < 0) {
-            printNoNewLine("Which option do you want to pick? (enter 1, 2, 3, or 4 to review options) ");
-            input = userIntInput();
-            if (input == 4)
-                reviewOptions();
+        boolean playGame = true;
+        while (playGame) {
+            print("\n\n\nWelcome to the Tap Out game! ");
+            reviewOptions();
+            int input = userIntInput();
+            while (input > 3 || input < 0) {
+                printNoNewLine("Which option do you want to pick? (enter 1, 2, 3, or 4 to review options) ");
+                input = userIntInput();
+                if (input == 4)
+                    reviewOptions();
+            }
+            if (input == 1)
+                playGame = beginGame();
+            else if (input == 2)
+                viewSettings();
+            else
+                playGame = false;
         }
-        if (input == 1)
-            return beginGame();
-        else if (input == 2)
-            viewSettings();
-        return false;
+        // print("\n\n\nWelcome to the Tap Out game! ");
+        // reviewOptions();
+        // int input = userIntInput();
+        // while (input > 3 || input < 0) {
+        //     printNoNewLine("Which option do you want to pick? (enter 1, 2, 3, or 4 to review options) ");
+        //     input = userIntInput();
+        //     if (input == 4)
+        //         reviewOptions();
+        // }
+        // switch (input) {
+        //     case 1:
+        //         return beginGame();
+        //     case 2:
+        //         viewSettings();
+        //     case 3:
+        //         return false;
+        // }
+        // if (input == 1)
+        //     return beginGame();
+        // else if (input == 2)
+        //     viewSettings();
+        return playGame;
     }
     private void viewSettings() {
-        print("\nThe game settings are below:  \n");
+        print("\nThe game settings are below:  ");
         print("AI:                  " + settings.printAI_LevelSetting());
         print("Update Game Text:    " + settings.printDisplayTextSetting());
-        printNoNewLine("\nDo you want to change these game settings?  (enter 'yes', 'y', 'no', 'n')");
+        printNoNewLine("\nDo you want to change these game settings?  (enter 'yes', 'y', 'no', 'n')  ");
         // yes/no
         String str = userStringInput();
         while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
@@ -40,7 +66,7 @@ public class Game {
                 // update option
         // repeat
         else
-            homeScreen();
+            return;
 
         // ask if done editing Options
 
