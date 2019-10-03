@@ -178,7 +178,7 @@ public class Game {
                 printNoNewLine("               ");
                 // continue;
             String modifiedName = getModifiedName(playersList.get(i).getName());
-            print("| " + (i+1) + ". " + modifiedName + "  | " + playersList.get(i).getLeftFingerCount() + " | " + playersList.get(i).getLeftFingerCount() + " |");
+            print("| " + (i+1) + ". " + modifiedName + "  | " + playersList.get(i).getLeftFingerCount() + " | " + playersList.get(i).getRightFingerCount() + " |");
             bot();
         }
 
@@ -190,13 +190,12 @@ public class Game {
         // SELECT OPPONET TO ATTACK
         printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
         int selectedPlayer = userIntInput();
-        while (selectedPlayer > 8 || selectedPlayer < 2 || selectedPlayer != (p1 + 1)) {
-            printNoNewLine("How many players do you want to name? (enter a number from the above list exluding yourself) ");
+        while ((selectedPlayer > playersList.size() || selectedPlayer < 2) || selectedPlayer == (p1 + 1)) {
+            printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
             selectedPlayer = userIntInput();
         }
 
-        pickOppHand(playersList.get(selectedPlayer), attack);
-
+        pickOppHand(playersList.get(selectedPlayer - 1), attack);
     }
 
 
