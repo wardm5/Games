@@ -19,29 +19,40 @@ public class Game {
         if (input == 1)
             return beginGame();
         else if (input == 2)
-            settings();
-        else
-            return false;
+            viewSettings();
+        return false;
     }
-    private void settings() {
-        print("The game settings are below:  ");
-        print("AI:  " + settings.getAI());
-        print("Update Game Text:  " + settings.getDisplayTest());
+    private void viewSettings() {
+        print("\nThe game settings are below:  ");
+        print("AI:  " + settings.printAI_LevelSetting());
+        print("Update Game Text:  " + settings.printDisplayTextSetting());
         print("Do you want to change these game settings?  ");
         // yes/no
 
-        // ask which option the user wants to update
-            // update option
+        String str = userStringInput();
+        while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
+            print("Incorrect entry, enter 'yes', 'y', 'no', or 'n')   ");
+            str = userStringInput();
+        }
+        if (str.equals("yes") || str.equals("y"))
+            changeSettings();
+            // ask which option the user wants to update
+                // update option
         // repeat
+        else
+            homeScreen();
 
         // ask if done editing Options
 
         // if yes, go to homeScreen
         // else repeat
     }
-
+    private void changeSettings() {
+        System.out.println("testing 123");
+        viewSettings();
+    }
     private void reviewOptions() {
-        print("Please choose an option (integer):  ");
+        print("Please choose an option (input number):  ");
         print("  1 - Play Game! ");
         print("  2 - Game Options ");
         print("  3 - Exit Game ");
