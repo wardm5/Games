@@ -190,15 +190,13 @@ public class Game {
         // SELECT OPPONET TO ATTACK
         printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
         int selectedPlayer = userIntInput();
-        while ((selectedPlayer > playersList.size() || selectedPlayer < 2) || selectedPlayer == (p1 + 1)) {
+        while ((selectedPlayer > playersList.size() || selectedPlayer < 1) || selectedPlayer == (p1 + 1)) {
             printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
             selectedPlayer = userIntInput();
         }
 
         pickOppHand(playersList.get(selectedPlayer - 1), attack);
     }
-
-
     private boolean split(Player p1) {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
             || (p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0 && p1.getLeftFingerCount() == 0)) {
