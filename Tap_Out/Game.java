@@ -2,7 +2,7 @@ import java.util.*;
 public class Game {
     public Settings settings = new Settings();
     public Game() {}
-    private List<Player> playersList;
+    private List<Player> playersList = new ArrayList<>();
     private Player[] players = new Player[2];
 
 
@@ -25,27 +25,6 @@ public class Game {
             else
                 playGame = false;
         }
-        // print("\n\n\nWelcome to the Tap Out game! ");
-        // reviewOptions();
-        // int input = userIntInput();
-        // while (input > 3 || input < 0) {
-        //     printNoNewLine("Which option do you want to pick? (enter 1, 2, 3, or 4 to review options) ");
-        //     input = userIntInput();
-        //     if (input == 4)
-        //         reviewOptions();
-        // }
-        // switch (input) {
-        //     case 1:
-        //         return beginGame();
-        //     case 2:
-        //         viewSettings();
-        //     case 3:
-        //         return false;
-        // }
-        // if (input == 1)
-        //     return beginGame();
-        // else if (input == 2)
-        //     viewSettings();
         return playGame;
     }
     private void viewSettings() {
@@ -74,6 +53,8 @@ public class Game {
         // else repeat
     }
     private void changeSettings() {
+        // ask which option the user wants to update
+            // update option
         System.out.println("testing 123");
         viewSettings();
     }
@@ -110,30 +91,43 @@ public class Game {
                 String tempName = userStringInput();
                 Player player1 = new Player(tempName);
 
-                numOfPlayers--;
+                // numOfPlayers--;
                 playersList.add(player1);
-                players[i] = player1;
+                // players[i] = player1;
             } else {
                 Player player1 = new Player("Player " + (i+1));
-                players[i] = player1;
+                // players[i] = player1;
+                playersList.add(player1);
             }
         }
         print();
         print();
     }
     private void playGame() {
+        int totalTurns = 0;
         int turn = 0;
-        while (!players[0].hasLost() && !players[1].hasLost()) {
-            if (turn % 2 == 0)
-                turn(0, 1);
-            else
-                turn(1, 0);
+        int currPlayers = playersList.size();
+        while (playersList.size() > 1) {
+            playTurn(turn % playersList.size());
+            if (playersList.get(turn % playersList.size()).hasLost()) {
+                playersList.remove(turn % playersList.size());
+                // turn = 0;
+            }
+            totalTurns++;
             turn++;
         }
-        if (players[0].hasLost())
-            print(players[1].getName() + " has won!! ");
-        else
-            print(players[0].getName() + " has won!!");
+        // while (!players[0].hasLost() && !players[1].hasLost()) {
+        //     if (turn % 2 == 0)
+        //         turn(0, 1);
+        //     else
+        //         turn(1, 0);
+        //     turn++;
+        // }
+        print(playersList.get(0).getName() + " has won!! ");
+        // if (players[0].hasLost())
+        //     print(players[1].getName() + " has won!! ");
+        // else
+        //     print(players[0].getName() + " has won!!");
         print("Thank you for playing! ");
     }
     private boolean playAgainQuestion() {
@@ -160,6 +154,52 @@ public class Game {
         int attack = pickYourHand(players[p1]);
         pickOppHand(players[p2] ,attack);
     }
+    private void playTurn(int p1) {
+        print("\n" + playersList.get(p1).getName() + ", it is your turn!!   ");
+        print(playersList.get(p1).getName() + "'s finger count below:  ");
+        playersList.get(p1).showFingerCounts();
+        print("Your opponent's finger count is:   ");
+        /*
+            ex:
+                    01234567890123456789012345678
+                                        | L | R |   OR        player 1 | player 2 |
+                    *-------------------*---*---*        *---*----------*----------*
+     Your Turn ---> | 1. Player_name    | L | R |        | L |
+                    *-------------------*---*---*        *---*-----------------
+                    | 2. Player_name    | L | R |        | R |
+                    *-------------------*---*---*        *---*-----------------
+        */
+
+        top();
+        for (int i = 0; i < playersList.size(); i++) {
+            if (p1 == i)
+                printNoNewLine("Your Turn ---> ");
+            else
+                printNoNewLine("               ");
+                // continue;
+            String modifiedName = getModifiedName(playersList.get(i).getName());
+            print("| " + (i+1) + ". " + modifiedName + "  | " + playersList.get(i).getLeftFingerCount() + " | " + playersList.get(i).getLeftFingerCount() + " |");
+            bot();
+        }
+
+        //  SPLIT SECTION, asks user if they want to split due to having greater than 1 finger in each hand that are also even.
+        if (split(playersList.get(p1)))
+            return;
+        // PICK YOUR HAND TO ATTACK WITH
+        int attack = pickYourHand(playersList.get(p1));
+        // SELECT OPPONET TO ATTACK
+        printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
+        int selectedPlayer = userIntInput();
+        while (selectedPlayer > 8 || selectedPlayer < 2 || selectedPlayer != (p1 + 1)) {
+            printNoNewLine("How many players do you want to name? (enter a number from the above list exluding yourself) ");
+            selectedPlayer = userIntInput();
+        }
+
+        pickOppHand(playersList.get(selectedPlayer), attack);
+
+    }
+
+
     private boolean split(Player p1) {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
             || (p1.getRightFingerCount() > 0 && p1.getRightFingerCount() % 2 == 0 && p1.getLeftFingerCount() == 0)) {
@@ -247,5 +287,18 @@ public class Game {
     private int userIntInput() {
         Scanner scan = new Scanner(System.in);
         return scan.nextInt();
+    }
+    private void top() {
+        System.out.println("                                   | L | R |");
+        System.out.println("               *-------------------*---*---*");
+    }
+    private String getModifiedName(String name) {
+        if (name.length() > 13)
+            return name.substring(0,13);
+        else
+            return String.format("%-13s", name);
+    }
+    private void bot() {
+        System.out.println("               *-------------------*---*---*");
     }
 }

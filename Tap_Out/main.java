@@ -16,6 +16,9 @@ public class main {
         while (playGame) {
             playGame = game.homeScreen();   // playgame is updated based on the homeScreen method
         }
+        goodbye();
+    }
+    private static void goodbye() {
         System.out.println("Goodbye, please play again soon!  ");
     }
 }
