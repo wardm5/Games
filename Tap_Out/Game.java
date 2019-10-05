@@ -108,7 +108,7 @@ public class Game {
         int turn = 0;
         int currPlayers = playersList.size();
         while (playersList.size() > 1) {
-            int attackedPlayer = playTurn(turn % playersList.size());
+            int attackedPlayer = playTurn(turn % playersList.size(), turn);
             if (playersList.get(attackedPlayer).hasLost()) {
                 playersList.remove(attackedPlayer);
             }
@@ -142,7 +142,7 @@ public class Game {
         int attack = pickYourHand(players[p1]);
         pickOppHand(players[p2] ,attack);
     }
-    private int playTurn(int p1) {
+    private int playTurn(int p1, int turn) {
         print("\n" + playersList.get(p1).getName() + ", it is your turn!!   ");
         print(playersList.get(p1).getName() + "'s finger count below:  ");
         playersList.get(p1).showFingerCounts();
@@ -176,13 +176,15 @@ public class Game {
         // PICK YOUR HAND TO ATTACK WITH
         int attack = pickYourHand(playersList.get(p1));
         // SELECT OPPONET TO ATTACK
-        printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
-        int selectedPlayer = userIntInput();
-        while ((selectedPlayer > playersList.size() || selectedPlayer < 1) || selectedPlayer == (p1 + 1)) {
+        int selectedPlayer = turn % 2;
+        if (playersList.size() > 2) {
             printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
             selectedPlayer = userIntInput();
+            while ((selectedPlayer > playersList.size() || selectedPlayer < 1) || selectedPlayer == (p1 + 1)) {
+                printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
+                selectedPlayer = userIntInput();
+            }
         }
-
         pickOppHand(playersList.get(selectedPlayer - 1), attack);
         return (selectedPlayer - 1);   // return selected player to check if they lost
     }
