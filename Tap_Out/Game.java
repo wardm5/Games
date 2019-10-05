@@ -111,6 +111,7 @@ public class Game {
             int attackedPlayer = playTurn(turn % playersList.size(), turn);
             if (playersList.get(attackedPlayer).hasLost()) {
                 playersList.remove(attackedPlayer);
+                turn--;
             }
             totalTurns++;
             turn++;
@@ -184,9 +185,10 @@ public class Game {
                 printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
                 selectedPlayer = userIntInput();
             }
+            selectedPlayer--;
         }
         pickOppHand(playersList.get(selectedPlayer - 1), attack);
-        return (selectedPlayer - 1);   // return selected player to check if they lost
+        return (selectedPlayer);   // return selected player to check if they lost
     }
     private boolean split(Player p1) {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)
