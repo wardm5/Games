@@ -108,26 +108,14 @@ public class Game {
         int turn = 0;
         int currPlayers = playersList.size();
         while (playersList.size() > 1) {
-            playTurn(turn % playersList.size());
-            if (playersList.get(turn % playersList.size()).hasLost()) {
-                playersList.remove(turn % playersList.size());
-                // turn = 0;
+            int attackedPlayer = playTurn(turn % playersList.size());
+            if (playersList.get(attackedPlayer).hasLost()) {
+                playersList.remove(attackedPlayer);
             }
             totalTurns++;
             turn++;
         }
-        // while (!players[0].hasLost() && !players[1].hasLost()) {
-        //     if (turn % 2 == 0)
-        //         turn(0, 1);
-        //     else
-        //         turn(1, 0);
-        //     turn++;
-        // }
         print(playersList.get(0).getName() + " has won!! ");
-        // if (players[0].hasLost())
-        //     print(players[1].getName() + " has won!! ");
-        // else
-        //     print(players[0].getName() + " has won!!");
         print("Thank you for playing! ");
     }
     private boolean playAgainQuestion() {
@@ -154,20 +142,20 @@ public class Game {
         int attack = pickYourHand(players[p1]);
         pickOppHand(players[p2] ,attack);
     }
-    private void playTurn(int p1) {
+    private int playTurn(int p1) {
         print("\n" + playersList.get(p1).getName() + ", it is your turn!!   ");
         print(playersList.get(p1).getName() + "'s finger count below:  ");
         playersList.get(p1).showFingerCounts();
         print("Your opponent's finger count is:   ");
         /*
-            ex:
-                    01234567890123456789012345678
-                                        | L | R |   OR        player 1 | player 2 |
-                    *-------------------*---*---*        *---*----------*----------*
-     Your Turn ---> | 1. Player_name    | L | R |        | L |
-                    *-------------------*---*---*        *---*-----------------
-                    | 2. Player_name    | L | R |        | R |
-                    *-------------------*---*---*        *---*-----------------
+            ex output:
+                            01234567890123456789012345678
+                                                | L | R |
+                            *-------------------*---*---*
+             Your Turn ---> | 1. Player_name    | L | R |
+                            *-------------------*---*---*
+                            | 2. Player_name    | L | R |
+                            *-------------------*---*---*
         */
 
         top();
@@ -184,7 +172,7 @@ public class Game {
 
         //  SPLIT SECTION, asks user if they want to split due to having greater than 1 finger in each hand that are also even.
         if (split(playersList.get(p1)))
-            return;
+            return p1;
         // PICK YOUR HAND TO ATTACK WITH
         int attack = pickYourHand(playersList.get(p1));
         // SELECT OPPONET TO ATTACK
@@ -196,6 +184,7 @@ public class Game {
         }
 
         pickOppHand(playersList.get(selectedPlayer - 1), attack);
+        return (selectedPlayer - 1);   // return selected player to check if they lost
     }
     private boolean split(Player p1) {
         if ( (p1.getLeftFingerCount() > 0 && p1.getLeftFingerCount() % 2 == 0 && p1.getRightFingerCount() == 0)

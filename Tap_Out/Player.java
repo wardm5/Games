@@ -51,7 +51,7 @@ public class Player {
         return this.name;
     }
     public boolean hasLost() {
-        return (this.fingerCountLeft == 0 && this.fingerCountRight == 0);
+        return (this.fingerCountLeft <= 0 && this.fingerCountRight <= 0);
     }
     public int getLeftFingerCount() {
         return fingerCountLeft;
