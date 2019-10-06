@@ -5,7 +5,6 @@ public class Game {
     private List<Player> playersList = new ArrayList<>();
     private Player[] players = new Player[2];
 
-
     public boolean homeScreen() {
         boolean playGame = true;
         while (playGame) {
@@ -128,26 +127,12 @@ public class Game {
         }
         return (str.equals("yes") || str.equals("y"));
     }
-    private void turn(int p1, int p2) {
-        print("\n" + players[p1].getName() + ", it is your turn!!   ");
-        print(players[p1].getName() + "'s finger count below:  ");
-        players[p1].showFingerCounts();
-        print("Your opponent's finger count is:   ");
-        players[p2].showFingerCounts();
-
-        //  SPLIT SECTION, asks user if they want to split due to having greater than 1 finger in each hand that are also even.
-        if (split(players[p1]))
-            return;
-
-        // PICK YOUR HAND TO ATTACK WITH
-        int attack = pickYourHand(players[p1]);
-        pickOppHand(players[p2] ,attack);
-    }
     private int playTurn(int p1, int turn) {
         print("\n" + playersList.get(p1).getName() + ", it is your turn!!   ");
         print(playersList.get(p1).getName() + "'s finger count below:  ");
         playersList.get(p1).showFingerCounts();
         print("Your opponent's finger count is:   ");
+
         /*
             ex output:
                             01234567890123456789012345678
@@ -177,7 +162,11 @@ public class Game {
         // PICK YOUR HAND TO ATTACK WITH
         int attack = pickYourHand(playersList.get(p1));
         // SELECT OPPONET TO ATTACK
-        int selectedPlayer = turn % 2;
+        int selectedPlayer;
+        if (turn % 2 == 0)
+            selectedPlayer = 1;
+        else
+            selectedPlayer = 0;
         if (playersList.size() > 2) {
             printNoNewLine("Which player do you want to attack?  (enter a number from the above list exluding yourself) ");
             selectedPlayer = userIntInput();
@@ -187,7 +176,7 @@ public class Game {
             }
             selectedPlayer--;
         }
-        pickOppHand(playersList.get(selectedPlayer - 1), attack);
+        pickOppHand(playersList.get(selectedPlayer), attack);
         return (selectedPlayer);   // return selected player to check if they lost
     }
     private boolean split(Player p1) {
