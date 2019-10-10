@@ -1,8 +1,9 @@
 public class Player {
-    String name;
+    final String name;
     int fingerCountLeft;
     int fingerCountRight;
-    boolean isComputer;
+    final boolean isComputer;
+    AI ai;
     public Player() {  // never really use this...
         this.name = "";
         this.fingerCountLeft = 1;
@@ -15,11 +16,26 @@ public class Player {
         this.fingerCountRight = 1;
         this.isComputer = false;
     }
+    public Player(String name, boolean isComputer) {
+        this.name = name;
+        this.fingerCountLeft = 1;
+        this.fingerCountRight = 1;
+        if (isComputer) {
+            this.isComputer = isComputer;
+            ai = new AI();
+        }
+    }
     public Player(boolean isComputer) {
         this.name = name;
         this.fingerCountLeft = 1;
         this.fingerCountRight = 1;
         this.isComputer = isComputer;
+    }
+    public void setComputer(boolean isComputer) {
+        if (isComputer) {
+            this.isComputer = isComputer;
+            ai = new AI();
+        }
     }
     public void showFingerCounts() {
         System.out.println("RIGHT:  " + fingerCountRight + "  ");
@@ -67,6 +83,9 @@ public class Player {
         if (check)
             return fingerCountRight;
         return fingerCountLeft;
+    }
+    public boolean getIsComputerSetting() {
+        return this.isComputer;
     }
 
 }

@@ -1,9 +1,20 @@
 import java.util.*;
+// import HelperMethod.*;
+
+// fix input mismatch issue
+// finish AI settings
+// get import working for HelperMethod class
+// get API working
+// finish settings class
+
 public class Game {
     public Settings settings = new Settings();
-    public Game() {}
+    List<GameStat> stats;
+    public Game(List<GameStat> stats, boolean displayText) {
+        this.stats = stats;
+        settings.updateDisplayText(false);
+    }
     private List<Player> playersList = new ArrayList<>();
-    private Player[] players = new Player[2];
 
     public boolean homeScreen() {
         boolean playGame = true;
@@ -20,42 +31,11 @@ public class Game {
             if (input == 1)
                 playGame = beginGame();
             else if (input == 2)
-                viewSettings();
+                settings.viewSettings();
             else
                 playGame = false;
         }
         return playGame;
-    }
-    private void viewSettings() {
-        print("\nThe game settings are below:  ");
-        print("AI:                  " + settings.printAI_LevelSetting());
-        print("Update Game Text:    " + settings.printDisplayTextSetting());
-        printNoNewLine("\nDo you want to change these game settings?  (enter 'yes', 'y', 'no', 'n')  ");
-        // yes/no
-        String str = userStringInput();
-        while (!str.equals("yes") && !str.equals("no") && !str.equals("y") && !str.equals("n")) {
-            print("Incorrect entry, enter 'yes', 'y', 'no', or 'n')   ");
-            str = userStringInput();
-        }
-
-        if (str.equals("yes") || str.equals("y"))
-            changeSettings();
-            // ask which option the user wants to update
-                // update option
-        // repeat
-        else
-            return;
-
-        // ask if done editing Options
-
-        // if yes, go to homeScreen
-        // else repeat
-    }
-    private void changeSettings() {
-        // ask which option the user wants to update
-            // update option
-        System.out.println("testing 123");
-        viewSettings();
     }
     private void reviewOptions() {
         print("Please choose an option (input number):  ");
@@ -64,38 +44,43 @@ public class Game {
         print("  3 - Exit Game ");
     }
     private boolean beginGame() {
-        int numOfPlayers = start();
-        setup(numOfPlayers);
+        int numOfPlayers = determinePlayers();
+        int numOfHumans = determineHumans(numOfPlayers);
+        setup(numOfPlayers, numOfHumans);
         playGame();
         if (playAgainQuestion())
             return true;
         print("Thanks for playing, hope you want to play again soon!  ");
         return false;
     }
-    private int start() {
-        printNoNewLine("How many players do you want to name? (min of 2, max of 8) ");
+    private int determinePlayers() {
+        printNoNewLine("How many players do you want? (min of 2, max of 8) ");
         int numOfPlayers = userIntInput();
         while (numOfPlayers > 8 || numOfPlayers < 2) {
-            printNoNewLine("How many players do you want to name? (min of 2, max of 8) ");
+            printNoNewLine("Input error: How many players do you want? (min of 2, max of 8) ");
             numOfPlayers = userIntInput();
         }
         return numOfPlayers;
     }
-    private void setup(int numOfPlayers) {
-
+    private int determineHumans(int players) {
+        printNoNewLine("How many human players do you want? (min of 0, max of " + players + ") ");
+        int numOfHumans = userIntInput();
+        while (numOfHumans > players || numOfHumans < 0) {
+            printNoNewLine("Input error: How many players do you want to name? (min of 0, max of " + players + ") ");
+            numOfHumans = userIntInput();
+        }
+        return numOfHumans;
+    }
+    private void setup(int numOfPlayers, int numOfHumans) {
         for (int i = 0; i < numOfPlayers; i++) {
-            if (numOfPlayers > 0) {
+            if (numOfHumans > 0) {
                 printNoNewLine("What would you like to name Player " + (i+1) + "? ");
-                // Scanner test = new Scanner(System.in);
                 String tempName = userStringInput();
                 Player player1 = new Player(tempName);
-
-                // numOfPlayers--;
                 playersList.add(player1);
-                // players[i] = player1;
+                numOfHumans--;
             } else {
-                Player player1 = new Player("Player " + (i+1));
-                // players[i] = player1;
+                Player player1 = new Player("Computer " + (i+1), true);
                 playersList.add(player1);
             }
         }
@@ -115,7 +100,10 @@ public class Game {
             totalTurns++;
             turn++;
         }
+        GameStat stat = new GameStat(playersList.get(0).getName(), totalTurns);
+        stats.add(stat);
         print(playersList.get(0).getName() + " has won!! ");
+        playersList.remove(0);
         print("Thank you for playing! ");
     }
     private boolean playAgainQuestion() {
@@ -132,7 +120,6 @@ public class Game {
         print(playersList.get(p1).getName() + "'s finger count below:  ");
         playersList.get(p1).showFingerCounts();
         print("Your opponent's finger count is:   ");
-
         /*
             ex output:
                             01234567890123456789012345678
@@ -143,14 +130,12 @@ public class Game {
                             | 2. Player_name    | L | R |
                             *-------------------*---*---*
         */
-
         top();
         for (int i = 0; i < playersList.size(); i++) {
             if (p1 == i)
                 printNoNewLine("Your Turn ---> ");
             else
                 printNoNewLine("               ");
-                // continue;
             String modifiedName = getModifiedName(playersList.get(i).getName());
             print("| " + (i+1) + ". " + modifiedName + "  | " + playersList.get(i).getLeftFingerCount() + " | " + playersList.get(i).getRightFingerCount() + " |");
             bot();
